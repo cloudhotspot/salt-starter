@@ -39,7 +39,14 @@ The specific Docker host mount point can be changed in the `docker-compose.yml` 
 
 ### Start the environment
 
-This starts the environment with all services running in the background:
+Check out the repository:
+
+	$ git clone https://github.com/cloudhotspot/salt-starter
+	...
+	...
+	$ cd salt-starter
+
+Now start the environment with all services running in the background:
 
 	$ docker-compose up -d
 	Creating saltstarter_master_1...
