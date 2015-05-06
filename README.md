@@ -10,6 +10,19 @@ The default configuration for this environment establishes a Salt master and two
 
 The Salt master has a salt root mounted at `/srv/salt` that maps to a shared folder on your Docker host of `/share/cloudhotspot/salt-starter/salt` by default.
 
+The specific Docker host mount point can be changed in the `docker-compose.yml` file:
+
+	master:
+	  image: jacksoncage/salt:latest
+	  ...
+	  ...
+	  
+	  volumes:
+	    # Only modify the first path which specifies the Docker host path to share
+	    - /share/cloudhotspot/salt-starter/salt:/srv/salt/:rw
+	  ...
+
+
 ## Prerequisites
 
 * <a href="https://docs.docker.com/installation/#installation" target="_blank">Docker</a>
@@ -25,7 +38,9 @@ See my <a href="http://github.com/cloudhotspot/fusion-docker" target="_blank">Fu
 
 ## Instructions
 
-Start the environment in the background:
+### Start the environment
+
+This starts the environment with all services running in the background:
 
 	$ docker-compose up -d
 	Creating saltstarter_master_1...
