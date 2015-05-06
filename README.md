@@ -1,0 +1,114 @@
+# Salt Starter
+
+A Docker Compose environment for developing and testing Salt configurations.
+
+This environment is based upon <a href="https://github.com/jacksoncage/salt-docker" _target="blank">jacksoncage/salt-docker</a>.
+
+## Introduction
+
+The default configuration for this environment establishes a Salt master and two Salt minions.
+
+The Salt master has a salt root mounted at `/srv/salt` that maps to a shared folder on your Docker host of `/share/cloudhotspot/salt-starter/salt` by default.
+
+## Prerequisites
+
+* <a href="https://docs.docker.com/installation/#installation" target="_blank">Docker</a>
+* <a href="https://docs.docker.com/compose/" target="_blank">Docker Compose</a>
+* Your Docker client environment needs to be pointed to a working Docker daemon
+
+### Important!
+The intention is for this environment to work against a local Docker daemon, with file sharing enabled between your machine and Docker containers so that you can maintain your Salt configurations on your local machine and test them in your Docker environment.  
+
+This is simple on Ubuntu machines, but harder on Windows/OS X machines where you need a virtual machine to run the Docker daemon.
+
+See my <a href="http://github.com/cloudhotspot/fusion-docker" target="_blank">Fusion Docker</a> project for establishing an OS X environment on Virtualbox/VMWare Fusion with file sharing enabled.
+
+## Instructions
+
+Start the environment in the background:
+
+	$ docker-compose up -d
+	Creating saltstarter_master_1...
+	Creating saltstarter_minion1_1...
+	Creating saltstarter_minion2_1...
+	
+### Services and Containers
+
+The default configuration establishes the following *services*:
+
+* master
+* minion1
+* minion2
+
+The above services are the top-level items in the `docker-compose.yml` file:
+
+	master:
+	  image: jacksoncage/salt:latest
+	  ...
+	  ...
+	minion1:
+	  ...
+	  ...
+	minion2:
+	  ...
+	  ...
+
+It is important to note that `docker-compose` commands typically refer to services whilst `docker` commands refer to the container that runs each service.
+
+You can view the container names using `docker-compose ps`:
+
+	$ docker-compose ps
+	         Name                   Command                   State                    Ports
+	-------------------------------------------------------------------------------------------------
+	saltstarter_master_1     bash start.sh            Up                       4505/tcp, 4506/tcp, 
+	                                                                           0.0.0.0:8080->8080/tcp,
+	                                                                           0.0.0.0:8081->8081/tcp
+	saltstarter_minion1_1    bash start.sh            Up                       4505/tcp, 4506/tcp,
+	                                                                           8080/tcp, 8081/tcp
+	saltstarter_minion2_1    bash start.sh            Up                       4505/tcp, 4506/tcp,
+	                                                                           8080/tcp, 8081/tcp
+																			   
+### Reviewing Logs
+
+	# Tail logs from all services 
+	$ docker-compose logs	
+	...
+	...
+	
+	# Tail logs from a single service
+	$ docker-compose logs master
+	...
+	master_1 | [DEBUG   ] Updating fileserver cache
+    master_1 | [DEBUG   ] This salt-master instance has accepted 3 minion keys.
+
+### Attaching to a Running Container
+
+	$ docker exec -it saltstarter_master_1 /bin/bash
+	
+	# Now inside the Salt master container
+	root@master:/# salt-key -L
+	Accepted Keys:
+	master
+	minion1
+	minion2
+	Unaccepted Keys:
+	Rejected Keys:
+	
+	root@master:/# salt '*' test.ping
+	minion1:
+	    True
+	minion2:
+	    True
+	master:
+	    True	
+	
+### Cleaning Up
+
+Kill your containers:
+	
+	$ docker-compose kill
+	
+Destroy your containers:
+
+	$ docker-compose rm
+	 
