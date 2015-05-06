@@ -8,6 +8,12 @@ This environment is based upon <a href="https://github.com/jacksoncage/salt-dock
 
 The default configuration for this environment establishes a Salt master and two Salt minions.
 
+The intention is for this environment to work against a local Docker daemon, with file sharing enabled between your machine and Docker containers so that you can maintain your Salt configurations on your local machine and test them in your Docker environment.  
+
+This is simple on Ubuntu machines, but harder on Windows/OS X machines where you need a virtual machine to run the Docker daemon.
+
+See my <a href="http://github.com/cloudhotspot/fusion-docker" target="_blank">Fusion Docker</a> project for establishing an OS X environment on Virtualbox/VMWare Fusion with file sharing enabled.
+
 The Salt master has a salt root mounted at `/srv/salt` that maps to a shared folder on your Docker host of `/share/cloudhotspot/salt-starter/salt` by default.
 
 The specific Docker host mount point can be changed in the `docker-compose.yml` file:
@@ -28,13 +34,6 @@ The specific Docker host mount point can be changed in the `docker-compose.yml` 
 * <a href="https://docs.docker.com/installation/#installation" target="_blank">Docker</a>
 * <a href="https://docs.docker.com/compose/" target="_blank">Docker Compose</a>
 * Your Docker client environment needs to be pointed to a working Docker daemon
-
-### Important!
-The intention is for this environment to work against a local Docker daemon, with file sharing enabled between your machine and Docker containers so that you can maintain your Salt configurations on your local machine and test them in your Docker environment.  
-
-This is simple on Ubuntu machines, but harder on Windows/OS X machines where you need a virtual machine to run the Docker daemon.
-
-See my <a href="http://github.com/cloudhotspot/fusion-docker" target="_blank">Fusion Docker</a> project for establishing an OS X environment on Virtualbox/VMWare Fusion with file sharing enabled.
 
 ## Instructions
 
