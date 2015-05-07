@@ -27,7 +27,7 @@ The specific Docker host mount points can be changed in the `docker-compose.yml`
 	  
 	  volumes:
 	    # Only modify the first path which specifies the Docker host path to share
-	    - /share/cloudhotspot/salt-starter/salt:/srv/salt/:rw
+	    - /share/cloudhotspot/salt-starter/salt/roots:/srv/salt/:rw
 	  ...
 
 
