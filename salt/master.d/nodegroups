@@ -1,0 +1,4 @@
+# Define your nodegroups below
+#
+# nodegroups:
+#   webservers: 'web'

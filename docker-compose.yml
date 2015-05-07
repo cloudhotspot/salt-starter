@@ -1,5 +1,5 @@
 master:
-  image: jacksoncage/salt:latest
+  image: cloudhotspot/salt:latest
   environment:
     SALT_USE: master
     SALT_NAME: master
@@ -15,9 +15,10 @@ master:
     - "8080:8080"
     - "8081:8081"
   volumes:
-    - /share/cloudhotspot/salt-starter/salt:/srv/salt/:rw
+    - /share/cloudhotspot/salt-starter/salt/roots/:/srv/salt/:rw
+    - /share/cloudhotspot/salt-starter/salt/master.d/:/etc/salt/master.d/:rw
 minion1:
-  image: jacksoncage/salt:latest
+  image: cloudhotspot/salt:latest
   links:
    - master
   environment:
@@ -26,7 +27,7 @@ minion1:
     SALT_GRAINS: "{'test': 'test'}"
   hostname: minion1
 minion2:
-  image: jacksoncage/salt:latest
+  image: cloudhotspot/salt:latest
   links:
    - master
   environment:

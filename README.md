@@ -2,11 +2,11 @@
 
 A Docker Compose environment for developing and testing Salt configurations.
 
-This environment is based upon <a href="https://github.com/jacksoncage/salt-docker" _target="blank">jacksoncage/salt-docker</a>.
+This environment is originally based from <a href="https://github.com/jacksoncage/salt-docker" _target="blank">jacksoncage/salt-docker</a>.
 
 ## Introduction
 
-The default configuration for this environment establishes a Salt master and two Salt minions.
+The default configuration for this environment establishes a Salt master and two Salt minions running Ubuntu 14.04.2 LTS.
 
 The intention is for this environment to work against a local Docker daemon, with file sharing enabled between your machine and Docker containers so that you can maintain your Salt configurations on your local machine and test them in your Docker environment.  
 
@@ -14,9 +14,11 @@ This is simple on Ubuntu machines, but harder on Windows/OS X machines where you
 
 See my <a href="http://github.com/cloudhotspot/fusion-docker" target="_blank">Fusion Docker</a> project for establishing an OS X environment on Virtualbox/VMWare Fusion with file sharing enabled.
 
-The Salt master has a salt root mounted at `/srv/salt` that maps to a shared folder on your Docker host of `/share/cloudhotspot/salt-starter/salt` by default.
+The Salt master has a salt root mounted at `/srv/salt` that maps to a shared folder on your Docker host of `/share/cloudhotspot/salt-starter/salt/roots` by default.  
 
-The specific Docker host mount point can be changed in the `docker-compose.yml` file:
+A mount point is also installed at `/etc/salt/master.d`, which is mapped to `/share/cloudhotspot/salt-starter/salt/master.d` by default.  This allows you to add settings as required to the Salt master configuration file. 
+
+The specific Docker host mount points can be changed in the `docker-compose.yml` file:
 
 	master:
 	  image: jacksoncage/salt:latest
